@@ -1,28 +1,41 @@
-{% extends "base.html" %}
-
-{% block content %}
-<h1>ML Risk Assessment</h1>
-
-<form method="POST">
-    <label for="community_ml">Select a Community:</label>
-    <select name="community_ml" id="community_ml" class="form-control">
-        {% for community in communities %}
-        <option value="{{ community }}" {% if community == selected_community %}selected{% endif %}>
-            {{ community }}
-        </option>
-        {% endfor %}
-    </select>
-    <button type="submit" class="btn btn-primary mt-2">Predict Risk</button>
-</form>
-
-{% if risk_prediction %}
-<div class="alert alert-info mt-3">{{ risk_prediction }}</div>
-{% endif %}
-
-<script>
-    // Ensure dropdown selection persists
-    document.getElementById("community_ml").value = "{{ selected_community }}";
-</script>
-
-{% endblock %}
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.4">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; -webkit-text-stroke: #000000}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; -webkit-text-stroke: #000000; min-height: 14.0px}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1">{% extends "base.html" %}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">{% block content %}</span></p>
+<p class="p1"><span class="s1">&lt;h1&gt;ML Risk Assessment&lt;/h1&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;form method="POST"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;label for="community_ml"&gt;Select a Community:&lt;/label&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;select name="community_ml" id="community_ml" class="form-control"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="" disabled selected&gt;Select a Community&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>{% for community in communities %}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="{{ community }}" {% if community == selected_community %}selected{% endif %}&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>{{ community }}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>{% endfor %}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/select&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;button type="submit" class="btn btn-primary mt-2"&gt;Predict Risk&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/form&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">{% if risk_prediction %}</span></p>
+<p class="p1"><span class="s1">&lt;div class="alert alert-info mt-3"&gt;{{ risk_prediction }}&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">{% endif %}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">{% endblock %}</span></p>
+</body>
+</html>

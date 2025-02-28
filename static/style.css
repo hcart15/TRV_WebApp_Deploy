@@ -122,3 +122,29 @@ body {
     overflow-x: auto;
 }
 
+/* Fix Dropdown Styling (Ensures Arrows Appear) */
+select.form-control {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: white;
+    border: 1px solid #ced4da;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 4px;
+    width: 100%;
+    cursor: pointer;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+}
+select.form-control:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Dropdown Arrow Fix for Safari */
+select.form-control::-ms-expand {
+    display: none;
+}
