@@ -1,59 +1,40 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2575.4">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; -webkit-text-stroke: #000000}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; -webkit-text-stroke: #000000; min-height: 14.0px}
-    span.s1 {font-kerning: none}
-  </style>
-</head>
-<body>
-<p class="p1"><span class="s1">{% extends "base.html" %}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">{% block content %}</span></p>
-<p class="p1"><span class="s1">&lt;h1&gt;Risk Assessment&lt;/h1&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">&lt;form method="POST"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- Property Type Dropdown --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;label for="property_type"&gt;Select Property Type:&lt;/label&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;select name="property_type" id="property_type" class="form-control"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="" disabled selected&gt;Select a Property Type&lt;/option&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>{% for property in property_types %}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="{{ property }}" {% if property == selected_property %}selected{% endif %}&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>{{ property }}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/option&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>{% endfor %}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/select&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- Community Dropdown --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;label for="community"&gt;Select a Community:&lt;/label&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;select name="community" id="community" class="form-control"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="" disabled selected&gt;Select a Community&lt;/option&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>{% for community in communities %}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="{{ community }}" {% if community == selected_community %}selected{% endif %}&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>{{ community }}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/option&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>{% endfor %}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/select&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;button type="submit" class="btn btn-primary mt-2"&gt;Calculate Risk&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/form&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">{% if risk_score is not none and consequence is not none %}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="alert alert-info mt-3"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;strong&gt;Risk Score:&lt;/strong&gt; {{ risk_score }} &lt;br&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;strong&gt;Consequence:&lt;/strong&gt; {{ consequence }}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="graph-container"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;img src="{{ plot_url }}" alt="Risk Assessment Graph"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1">{% endif %}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">{% endblock %}</span></p>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Risk Assessment</h1>
+
+<form method="POST">
+    <label for="property_type">Select Property Type:</label>
+    <select name="property_type" id="property_type" class="form-control">
+        <option value="" disabled selected>Select a Property Type</option>
+        {% for property in property_types %}
+        <option value="{{ property }}" {% if property == selected_property %}selected{% endif %}>
+            {{ property }}
+        </option>
+        {% endfor %}
+    </select>
+
+    <label for="community">Select a Community:</label>
+    <select name="community" id="community" class="form-control">
+        <option value="" disabled selected>Select a Community</option>
+        {% for community in communities %}
+        <option value="{{ community }}" {% if community == selected_community %}selected{% endif %}>
+            {{ community }}
+        </option>
+        {% endfor %}
+    </select>
+
+    <button type="submit" class="btn btn-primary mt-2">Calculate Risk</button>
+</form>
+
+{% if risk_score is not none and consequence is not none %}
+<div class="alert alert-info mt-3">
+    <strong>Selected Property Type:</strong> {{ selected_property }} <br>
+    <strong>Selected Community:</strong> {{ selected_community }} <br>
+    <strong>Risk Score:</strong> {{ risk_score }} <br>
+    <strong>Consequence:</strong> {{ consequence }}
+</div>
+{% endif %}
+
+{% endblock %}
+
