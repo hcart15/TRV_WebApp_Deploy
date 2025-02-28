@@ -1,27 +1,28 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container mt-4">
-    <h2 class="text-center">Machine Learning Risk Assessment</h2>
+<h1>ML Risk Assessment</h1>
 
-    <form method="POST">
-        <div class="form-group">
-            <label for="community_ml">Select Community:</label>
-            <select id="community_ml" name="community_ml" required>
-                {% for community in communities %}
-                    <option value="{{ community }}" {% if community == selected_community_ml %}selected{% endif %}>{{ community }}</option>
-                {% endfor %}
-            </select>
-        </div>
+<form method="POST">
+    <label for="community_ml">Select a Community:</label>
+    <select name="community_ml" id="community_ml" class="form-control">
+        {% for community in communities %}
+        <option value="{{ community }}" {% if community == selected_community %}selected{% endif %}>
+            {{ community }}
+        </option>
+        {% endfor %}
+    </select>
+    <button type="submit" class="btn btn-primary mt-2">Predict Risk</button>
+</form>
 
-        <button type="submit">Predict Risk</button>
-    </form>
+{% if risk_prediction %}
+<div class="alert alert-info mt-3">{{ risk_prediction }}</div>
+{% endif %}
 
-    {% if risk_prediction %}
-    <div class="mt-4">
-        <h3>{{ risk_prediction }}</h3>
-    </div>
-    {% endif %}
-</div>
+<script>
+    // Ensure dropdown selection persists
+    document.getElementById("community_ml").value = "{{ selected_community }}";
+</script>
+
 {% endblock %}
 

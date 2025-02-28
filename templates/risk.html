@@ -1,38 +1,48 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container mt-4">
-    <h2 class="text-center">Risk Assessment</h2>
+<h1>Risk Assessment</h1>
 
-    <form method="POST">
-        <div class="form-group">
-            <label for="property_type">Select Property Type:</label>
-            <select id="property_type" name="property_type" required>
-                {% for property in property_types %}
-                    <option value="{{ property }}" {% if property == selected_property %}selected{% endif %}>{{ property }}</option>
-                {% endfor %}
-            </select>
-        </div>
+<form method="POST">
+    <label for="property_type">Select Property Type:</label>
+    <select name="property_type" id="property_type" class="form-control">
+        {% for property in property_types %}
+        <option value="{{ property }}" {% if property == selected_property %}selected{% endif %}>
+            {{ property }}
+        </option>
+        {% endfor %}
+    </select>
 
-        <div class="form-group">
-            <label for="community">Select Community:</label>
-            <select id="community" name="community" required>
-                {% for community in communities %}
-                    <option value="{{ community }}" {% if community == selected_community %}selected{% endif %}>{{ community }}</option>
-                {% endfor %}
-            </select>
-        </div>
+    <label for="community">Select a Community:</label>
+    <select name="community" id="community" class="form-control">
+        {% for community in communities %}
+        <option value="{{ community }}" {% if community == selected_community %}selected{% endif %}>
+            {{ community }}
+        </option>
+        {% endfor %}
+    </select>
 
-        <button type="submit">Assess Risk</button>
-    </form>
+    <button type="submit" class="btn btn-primary mt-2">Calculate Risk</button>
+</form>
 
-    {% if risk_score is not none and consequence is not none %}
-    <div class="graph-container mt-4">
-        <h3>Risk Score: {{ risk_score|round(2) }}</h3>
-        <h3>Consequence: {{ consequence|round(2) }}</h3>
-        <img src="{{ plot_url }}" alt="Risk Assessment Plot">
-    </div>
-    {% endif %}
+{% if risk_score is not none and consequence is not none %}
+<div class="alert alert-info mt-3">
+    <p><strong>Likelihood Score:</strong> {{ risk_score }}</p>
+    <p><strong>Consequence Score:</strong> {{ consequence }}</p>
 </div>
+{% endif %}
+
+{% if plot_url %}
+<div class="graph-container mt-3">
+    <img src="{{ plot_url }}" alt="Risk Assessment Plot">
+</div>
+{% endif %}
+
+<script>
+    // Ensure dropdown selection persists
+    document.getElementById("property_type").value = "{{ selected_property }}";
+    document.getElementById("community").value = "{{ selected_community }}";
+</script>
+
 {% endblock %}
 
