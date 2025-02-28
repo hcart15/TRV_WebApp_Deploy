@@ -213,8 +213,6 @@ def calculate_risk_score(property_type, community):
     return property_risk, consequence
 
 import os
+print(f"Render expects PORT={os.environ.get('PORT')}")
 
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))  # Render sets PORT, default to 5000
-    print(f"Starting server on port {port}...")  # Debugging output
-    app.run(host="0.0.0.0", port=port)
+
