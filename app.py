@@ -215,8 +215,9 @@ def calculate_risk_score(property_type, community):
 import os
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))  # Default to 5000 instead of 10000
+    port = int(os.environ.get("PORT", 10000))  # Use PORT from environment, defaulting to 10000
     print(f"Starting server on port {port}...")  # Debugging output
-    app.run(host="0.0.0.0", port=port, debug=False)
+    app.run(host="0.0.0.0", port=port)
+
 
 
