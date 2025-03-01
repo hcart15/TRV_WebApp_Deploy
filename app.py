@@ -37,29 +37,24 @@ def index():
 # ---------------------
 @app.route("/risk", methods=["GET", "POST"])
 def risk():
-    property_types = [
-        "Bank", "Grocery Store", "Flower Shop", "Gas Station", "Pharmacy",
-        "Restaurant", "Retail Store", "Convenience Store", "Shopping Mall",
-        "Office Building", "Warehouse", "Factory", "Park", "Parking Lot",
-        "Residential House", "Gym", "Library", "Church", "Bar", "Hotel",
-        "School", "Medical Clinic"
-    ]
+    property_types = ["Bank", "Grocery Store", "Flower Shop", "Gas Station", "Pharmacy",
+                      "Restaurant", "Retail Store", "Convenience Store", "Shopping Mall",
+                      "Office Building", "Warehouse", "Factory", "Park", "Parking Lot",
+                      "Residential House", "Gym", "Library", "Church", "Bar", "Hotel",
+                      "School", "Medical Clinic"]
     communities = sorted(consolidated_data["Community"].dropna().unique())
 
-    risk_score = None
-    consequence = None
-    plot_url = None
+    risk_score, consequence, plot_url = None, None, None
+    selected_property, selected_community = None, None  # Store selected values
 
     if request.method == "POST":
         selected_property = request.form.get("property_type")
         selected_community = request.form.get("community")
         risk_score, consequence = calculate_risk_score(selected_property, selected_community)
 
+        # Generate plot if valid risk score
         if risk_score is not None and consequence is not None:
             fig, ax = plt.subplots(figsize=(6, 6), facecolor="#f4f4f4")
-            ax.set_xlim(0, 100)
-            ax.set_ylim(0, 100)
-
             ax.scatter(risk_score, consequence, color="red", s=100, edgecolors="black", linewidth=1.5, alpha=0.9)
             ax.grid(True, linestyle="--", linewidth=0.7, alpha=0.7)
             ax.axvline(x=50, color="black", linestyle="-", linewidth=1.2, alpha=0.5)
@@ -83,7 +78,10 @@ def risk():
                            communities=communities,
                            risk_score=risk_score,
                            consequence=consequence,
-                           plot_url=plot_url)
+                           plot_url=plot_url,
+                           selected_property=selected_property,
+                           selected_community=selected_community)
+
 
 # ---------------------
 # CEI Data Tab (Tab 2)
@@ -143,41 +141,41 @@ from flask_caching import Cache
 cache = Cache(app, config={"CACHE_TYPE": "simple"})
 
 @app.route("/ml", methods=["GET", "POST"])
-@cache.cached(timeout=300)  # Cache for 5 minutes
+@cache.cached(timeout=300)
 def ml():
     communities = sorted(consolidated_data["Community"].dropna().unique())
     risk_prediction = None
+    selected_community = None  # Store selection
 
     if request.method == "POST":
         selected_community = request.form.get("community_ml")
 
-        # Load pre-trained model
         try:
             risk_model = joblib.load("risk_model.pkl")
         except Exception as e:
             return render_template("ml.html", communities=communities, risk_prediction=f"Error loading model: {e}")
 
-        # Get data for selected community
         row = consolidated_data[consolidated_data["Community"] == selected_community]
         if row.empty:
             return render_template("ml.html", communities=communities, risk_prediction="Community data not found.")
 
-        # Prepare data
         feature_cols = [col for col in row.select_dtypes(include=["number"]).columns if col.lower() != "risk_score"]
         X_new = row[feature_cols].fillna(0)
 
-        # Ensure correct column order
         if hasattr(risk_model, "feature_names_in_"):
             X_new = X_new.reindex(columns=risk_model.feature_names_in_, fill_value=0)
 
-        # Predict risk score
         try:
             pred = risk_model.predict(X_new)[0]
             risk_prediction = f"Predicted ML Risk Score for {selected_community}: {pred:.2f}"
         except Exception as e:
             risk_prediction = f"ML prediction failed: {e}"
 
-    return render_template("ml.html", communities=communities, risk_prediction=risk_prediction)
+    return render_template("ml.html",
+                           communities=communities,
+                           selected_community=selected_community,
+                           risk_prediction=risk_prediction)
+
 
 
 # ---------------------
