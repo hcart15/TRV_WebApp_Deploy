@@ -1,4 +1,4 @@
-mport matplotlib
+import matplotlib
 matplotlib.use("Agg")  # Non-interactive backend for Flask
 from flask import Flask, render_template, request, send_from_directory
 import pandas as pd
