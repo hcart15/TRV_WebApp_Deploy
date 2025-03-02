@@ -1,40 +1,50 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Risk Assessment</h1>
-
-<form method="POST">
-    <label for="property_type">Select Property Type:</label>
-    <select name="property_type" id="property_type" class="form-control">
-        <option value="" disabled selected>Select a Property Type</option>
-        {% for property in property_types %}
-        <option value="{{ property }}" {% if property == selected_property %}selected{% endif %}>
-            {{ property }}
-        </option>
-        {% endfor %}
-    </select>
-
-    <label for="community">Select a Community:</label>
-    <select name="community" id="community" class="form-control">
-        <option value="" disabled selected>Select a Community</option>
-        {% for community in communities %}
-        <option value="{{ community }}" {% if community == selected_community %}selected{% endif %}>
-            {{ community }}
-        </option>
-        {% endfor %}
-    </select>
-
-    <button type="submit" class="btn btn-primary mt-2">Calculate Risk</button>
-</form>
-
-{% if risk_score is not none and consequence is not none %}
-<div class="alert alert-info mt-3">
-    <strong>Selected Property Type:</strong> {{ selected_property }} <br>
-    <strong>Selected Community:</strong> {{ selected_community }} <br>
-    <strong>Risk Score:</strong> {{ risk_score }} <br>
-    <strong>Consequence:</strong> {{ consequence }}
+<div class="container mt-4">
+    <h1 class="text-center">Risk Assessment</h1>
+    
+    <form method="POST">
+        <div class="form-group">
+            <label for="property_type">Select Property Type:</label>
+            <select name="property_type" id="property_type" class="form-control">
+                <option value="" disabled {% if not selected_property %}selected{% endif %}>Select a Property Type</option>
+                {% for property in property_types %}
+                <option value="{{ property }}" {% if property == selected_property %}selected{% endif %}>
+                    {{ property }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="community">Select a Community:</label>
+            <select name="community" id="community" class="form-control">
+                <option value="" disabled {% if not selected_community %}selected{% endif %}>Select a Community</option>
+                {% for community in communities %}
+                <option value="{{ community }}" {% if community == selected_community %}selected{% endif %}>
+                    {{ community }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <button type="submit" class="btn btn-primary mt-2">Calculate Risk</button>
+    </form>
+    
+    {% if risk_score is not none and consequence is not none %}
+    <div class="alert alert-info mt-3">
+        <strong>Selected Property Type:</strong> {{ selected_property }}<br>
+        <strong>Selected Community:</strong> {{ selected_community }}<br>
+        <strong>Risk Score:</strong> {{ risk_score }}<br>
+        <strong>Consequence:</strong> {{ consequence }}
+    </div>
+    {% endif %}
+    
+    {% if plot_url %}
+    <div class="graph-container mt-3">
+        <img src="{{ plot_url }}" alt="Risk Assessment Graph" class="img-fluid">
+    </div>
+    {% endif %}
 </div>
-{% endif %}
-
 {% endblock %}
-
