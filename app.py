@@ -1,6 +1,6 @@
 import matplotlib
 matplotlib.use("Agg")  # Non-interactive backend for Flask
-from flask import Flask, render_template, request, send_from_directory
+from flask import Flask, render_template, request, send_from_directory, make_response
 import pandas as pd
 import matplotlib.pyplot as plt
 from io import BytesIO
@@ -19,11 +19,13 @@ consolidated_data = pd.read_parquet("data/consolidated_data_final_with_composite
 # Setup Flask-Caching
 cache = Cache(app, config={"CACHE_TYPE": "simple"})  # Simple in-memory cache
 
-# Cache static files (CSS, JS, images) for 1 day
+# Cache static files (CSS, JS, images) for 1 day with caching headers
 @app.route('/static/<path:filename>')
 @cache.cached(timeout=86400)  # Cache for 24 hours
 def cached_static(filename):
-    return send_from_directory("static", filename)
+    response = make_response(send_from_directory("static", filename))
+    response.headers['Cache-Control'] = 'public, max-age=86400'
+    return response
 
 # ---------------------
 # Home Route
@@ -219,5 +221,3 @@ def calculate_risk_score(property_type, community):
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))
     app.run(debug=True, host="0.0.0.0", port=port)
-
-
