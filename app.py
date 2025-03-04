@@ -7,13 +7,14 @@ from io import BytesIO
 import base64
 from flask_caching import Cache  # Import caching
 import joblib
-import os
 
 # Initialize Flask App
 app = Flask(__name__, template_folder="templates", static_folder="static")
 
-# Load data (ensure correct path)
-consolidated_data = pd.read_csv("data/consolidated_data_final_with_composite_boosts.csv")
+import pandas as pd
+
+# Load data using Parquet for faster access
+consolidated_data = pd.read_parquet("data/consolidated_data_final_with_composite_boosts.parquet")
 
 # Setup Flask-Caching
 cache = Cache(app, config={"CACHE_TYPE": "simple"})  # Simple in-memory cache
@@ -35,7 +36,6 @@ def index():
 # Risk Assessment Tab (Tab 1)
 # ---------------------
 @app.route("/risk", methods=["GET", "POST"])
-@cache.cached(timeout=300, key_prefix="risk", unless=lambda: request.method == 'POST')
 def risk():
     property_types = [
         "Bank", "Grocery Store", "Flower Shop", "Gas Station", "Pharmacy",
@@ -85,11 +85,11 @@ def risk():
                            consequence=consequence,
                            plot_url=plot_url)
 
+
 # ---------------------
 # CEI Data Tab (Tab 2)
 # ---------------------
 @app.route("/cei")
-@cache.cached(timeout=300, key_prefix="cei")
 def cei():
     # Define only the 5 required columns for display
     cei_display_columns = [
@@ -122,7 +122,6 @@ def cei():
 # Employment Data Tab (Tab 3)
 # ---------------------
 @app.route("/employment")
-@cache.cached(timeout=300, key_prefix="employment")
 def employment():
     emp_columns = [
         "Community", "EMPLOYED", "UNEMPLOYED", "TOTAL_POP_OVER_15_HOUSEHOLD",
@@ -140,7 +139,6 @@ def employment():
 # ML Risk Assessment Tab (Tab 4)
 # ---------------------
 @app.route("/ml", methods=["GET", "POST"])
-@cache.cached(timeout=300, key_prefix="ml", unless=lambda: request.method == 'POST')
 def ml():
     communities = sorted(consolidated_data["Community"].dropna().unique())
     risk_prediction = None
@@ -211,5 +209,4 @@ def calculate_risk_score(property_type, community):
     return property_risk, consequence
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 10000))  # Default to 10000 if PORT is not set
-    app.run(debug=False, host="0.0.0.0", port=port)
+    app.run(debug=True, host="0.0.0.0")
