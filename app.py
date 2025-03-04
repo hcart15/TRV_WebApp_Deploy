@@ -227,9 +227,6 @@ def dependencies():
     output = subprocess.check_output(["pip", "freeze"]).decode("utf-8")
     return f"<pre>{output}</pre>"
 
-
-import os
-
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 10000))  # Default to 10000 if PORT is not set
+    port = int(os.environ.get("PORT", 10000))
     app.run(debug=True, host="0.0.0.0", port=port)
