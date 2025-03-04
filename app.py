@@ -36,6 +36,7 @@ def index():
 # Risk Assessment Tab (Tab 1)
 # ---------------------
 @app.route("/risk", methods=["GET", "POST"])
+@cache.cached(timeout=300, key_prefix="risk", unless=lambda: request.method == 'POST')
 def risk():
     property_types = [
         "Bank", "Grocery Store", "Flower Shop", "Gas Station", "Pharmacy",
@@ -46,6 +47,9 @@ def risk():
     ]
     communities = sorted(consolidated_data["Community"].dropna().unique())
 
+    # Initialize these so they're defined even if the user hasn't submitted the form
+    selected_property = None
+    selected_community = None
     risk_score = None
     consequence = None
     plot_url = None
@@ -53,6 +57,7 @@ def risk():
     if request.method == "POST":
         selected_property = request.form.get("property_type")
         selected_community = request.form.get("community")
+
         risk_score, consequence = calculate_risk_score(selected_property, selected_community)
 
         if risk_score is not None and consequence is not None:
@@ -78,13 +83,16 @@ def risk():
             plot_url = f"data:image/png;base64,{plot_data}"
             plt.close(fig)
 
-    return render_template("risk.html",
-                           property_types=property_types,
-                           communities=communities,
-                           risk_score=risk_score,
-                           consequence=consequence,
-                           plot_url=plot_url)
-
+    return render_template(
+        "risk.html",
+        property_types=property_types,
+        communities=communities,
+        selected_property=selected_property,
+        selected_community=selected_community,
+        risk_score=risk_score,
+        consequence=consequence,
+        plot_url=plot_url
+    )
 
 # ---------------------
 # CEI Data Tab (Tab 2)
