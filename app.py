@@ -35,7 +35,7 @@ def index():
 # Risk Assessment Tab (Tab 1)
 # ---------------------
 @app.route("/risk", methods=["GET", "POST"])
-@cache.cached(timeout=300, key_prefix="risk_<property_type>_<community>")
+@cache.cached(timeout=300, key_prefix="risk", unless=lambda: request.method == 'POST')
 def risk():
     property_types = [
         "Bank", "Grocery Store", "Flower Shop", "Gas Station", "Pharmacy",
@@ -140,7 +140,7 @@ def employment():
 # ML Risk Assessment Tab (Tab 4)
 # ---------------------
 @app.route("/ml", methods=["GET", "POST"])
-@cache.cached(timeout=300, key_prefix="ml_<community>")
+@cache.cached(timeout=300, key_prefix="ml", unless=lambda: request.method == 'POST')
 def ml():
     communities = sorted(consolidated_data["Community"].dropna().unique())
     risk_prediction = None
