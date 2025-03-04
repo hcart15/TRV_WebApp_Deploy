@@ -7,6 +7,7 @@ from io import BytesIO
 import base64
 from flask_caching import Cache  # Import caching
 import joblib
+import os
 
 # Initialize Flask App
 app = Flask(__name__, template_folder="templates", static_folder="static")
@@ -34,6 +35,7 @@ def index():
 # Risk Assessment Tab (Tab 1)
 # ---------------------
 @app.route("/risk", methods=["GET", "POST"])
+@cache.cached(timeout=300, key_prefix="risk_<property_type>_<community>")
 def risk():
     property_types = [
         "Bank", "Grocery Store", "Flower Shop", "Gas Station", "Pharmacy",
@@ -83,11 +85,11 @@ def risk():
                            consequence=consequence,
                            plot_url=plot_url)
 
-
 # ---------------------
 # CEI Data Tab (Tab 2)
 # ---------------------
 @app.route("/cei")
+@cache.cached(timeout=300, key_prefix="cei")
 def cei():
     # Define only the 5 required columns for display
     cei_display_columns = [
@@ -120,6 +122,7 @@ def cei():
 # Employment Data Tab (Tab 3)
 # ---------------------
 @app.route("/employment")
+@cache.cached(timeout=300, key_prefix="employment")
 def employment():
     emp_columns = [
         "Community", "EMPLOYED", "UNEMPLOYED", "TOTAL_POP_OVER_15_HOUSEHOLD",
@@ -137,6 +140,7 @@ def employment():
 # ML Risk Assessment Tab (Tab 4)
 # ---------------------
 @app.route("/ml", methods=["GET", "POST"])
+@cache.cached(timeout=300, key_prefix="ml_<community>")
 def ml():
     communities = sorted(consolidated_data["Community"].dropna().unique())
     risk_prediction = None
@@ -207,4 +211,5 @@ def calculate_risk_score(property_type, community):
     return property_risk, consequence
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0")
+    port = int(os.environ.get("PORT", 10000))  # Default to 10000 if PORT is not set
+    app.run(debug=False, host="0.0.0.0", port=port)
