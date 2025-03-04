@@ -216,6 +216,18 @@ def calculate_risk_score(property_type, community):
 
     return property_risk, consequence
 
+import subprocess
+from flask import abort
+
+@app.route("/dependencies")
+def dependencies():
+    # Only allow this route in a safe context (e.g., when debugging locally or behind auth)
+    if not app.debug:
+        abort(403)
+    output = subprocess.check_output(["pip", "freeze"]).decode("utf-8")
+    return f"<pre>{output}</pre>"
+
+
 import os
 
 if __name__ == "__main__":
