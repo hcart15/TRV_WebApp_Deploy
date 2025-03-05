@@ -20,19 +20,19 @@ body {
 
 /* Tab Bar Styling */
 .nav-tabs {
-    border-bottom: 2px solid #007bff;
+    border-bottom: 2px solid #003366;
 }
 .nav-tabs .nav-link {
-    color: #007bff;
+    color: #003366;
     font-weight: bold;
 }
 .nav-tabs .nav-link.active {
     background-color: #003366;
     color: white;
-    border-color: #007bff;
+    border-color: #003366;
 }
 .nav-tabs .nav-link:hover {
-    color: #0056b3;
+    color: #003366;
 }
 
 /* Container */
