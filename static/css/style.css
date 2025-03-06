@@ -15,7 +15,7 @@ body {
     font-weight: bold;
 }
 .nav-link:hover {
-    color: #fff700 !important; /* Gold hover effect */
+    color: #ffffff !important; /* Gold hover effect */
 }
 
 /* Tab Bar Styling */
@@ -27,12 +27,12 @@ body {
     font-weight: bold;
 }
 .nav-tabs .nav-link.active {
-    background-color: #fff700;
+    background-color: #ffffff;
     color: white;
     border-color: #003366;
 }
 .nav-tabs .nav-link:hover {
-    color: #fff700;
+    color: #ffffff;
 }
 
 /* Container */
