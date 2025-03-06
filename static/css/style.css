@@ -8,14 +8,14 @@ body {
 
 /* Navbar Styling */
 .navbar {
-    background-color: #0000A3 !important; /* Blue navbar */
+    background-color: #007bff !important; /* Blue navbar */
 }
 .navbar-brand, .nav-link {
-    color: #ffffff !important;
+    color: #000000 !important;
     font-weight: bold;
 }
 .nav-link:hover {
-    color: #ffffff !important; /* Gold hover effect */
+    color: #000000 !important; /* Gold hover effect */
 }
 
 /* Tab Bar Styling */
@@ -23,7 +23,7 @@ body {
     border-bottom: 2px solid #003366;
 }
 .nav-tabs .nav-link {
-    color: #ffffff;
+    color: #000000;
     font-weight: bold;
 }
 .nav-tabs .nav-link.active {
@@ -32,7 +32,7 @@ body {
     border-color: #003366;
 }
 .nav-tabs .nav-link:hover {
-    color: #ffffff;
+    color: #000000;
 }
 
 /* Container */
