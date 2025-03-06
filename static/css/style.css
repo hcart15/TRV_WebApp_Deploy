@@ -25,6 +25,7 @@ body {
 .nav-tabs .nav-link {
     color: #000000;
     font-weight: bold;
+    -webkit-tap-highlight-color: transparent; /* Remove yellow flash on tap */
 }
 .nav-tabs .nav-link.active {
     background-color: #ffffff;
@@ -105,13 +106,22 @@ body {
     background-color: #0056b3;
 }
 
+/* Custom Buttons for Specific Actions */
+/* Use these classes on your buttons in the ML and Risk pages respectively */
+.btn-predict {
+    color: #000000 !important;
+}
+.btn-calculate {
+    color: #000000 !important;
+}
+
 /* Graph Container */
 .graph-container {
     text-align: center;
     margin-top: 20px;
 }
 .graph-container img {
-    border: 2px solid #007bff;
+    border: 2px solid #ffffff;
     border-radius: 5px;
     padding: 5px;
 }
