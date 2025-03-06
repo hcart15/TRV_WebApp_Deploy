@@ -11,7 +11,7 @@ body {
     background-color: #0000A3 !important; /* Blue navbar */
 }
 .navbar-brand, .nav-link {
-    color: #fff700 !important;
+    color: #ffffff !important;
     font-weight: bold;
 }
 .nav-link:hover {
@@ -23,7 +23,7 @@ body {
     border-bottom: 2px solid #003366;
 }
 .nav-tabs .nav-link {
-    color: #fff700;
+    color: #ffffff;
     font-weight: bold;
 }
 .nav-tabs .nav-link.active {
