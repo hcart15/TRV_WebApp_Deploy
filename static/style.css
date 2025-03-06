@@ -8,7 +8,7 @@ body {
 
 /* Navbar Styling */
 .navbar {
-    background-color: #0027EB !important; /* Blue navbar */
+    background-color: #0000A3 !important; /* Blue navbar */
 }
 .navbar-brand, .nav-link {
     color: #fff700 !important;
@@ -27,12 +27,12 @@ body {
     font-weight: bold;
 }
 .nav-tabs .nav-link.active {
-    background-color: #667fff;
+    background-color: #fff700;
     color: white;
     border-color: #003366;
 }
 .nav-tabs .nav-link:hover {
-    color: #003366;
+    color: #fff700;
 }
 
 /* Container */
