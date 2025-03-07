@@ -25,7 +25,6 @@ body {
 .nav-tabs .nav-link {
     color: #000000;
     font-weight: bold;
-    -webkit-tap-highlight-color: transparent; /* Remove yellow flash on tap */
 }
 .nav-tabs .nav-link.active {
     background-color: #ffffff;
