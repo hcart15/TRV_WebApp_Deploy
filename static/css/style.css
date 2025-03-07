@@ -75,5 +75,5 @@ body {
 
 /* Reserve space for container to reduce layout shifts */
 .container.mt-4 {
-    min-height: 862px;
+    min-height: 926px;
 }
