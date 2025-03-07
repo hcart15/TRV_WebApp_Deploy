@@ -19,21 +19,6 @@ body {
 }
 
 /* Tab Bar Styling */
-.nav-tabs {
-    border-bottom: 2px solid #003366;
-}
-.nav-tabs .nav-link {
-    color: #000000;
-    font-weight: bold;
-}
-.nav-tabs .nav-link.active {
-    background-color: #ffffff;
-    color: #000000;
-    border-color: #003366;
-}
-.nav-tabs .nav-link:hover {
-    color: #000000;
-}
 
 /* Container */
 .container {
@@ -48,53 +33,12 @@ body {
     width: 100%;
     border-collapse: collapse;
 }
-.table th, .table td {
-    padding: 12px;
-    text-align: center; /* Centers all table content */
-    border: 1px solid #dee2e6;
-}
 
 /* Table Headers */
-.table th {
-    background-color: #007bff;
-    color: white;
-    font-weight: bold;
-    text-align: center;
-}
 
 /* Alternating Row Colors for Readability */
-.table-striped tbody tr:nth-of-type(odd) {
-    background-color: #f2f2f2;
-}
 
 /* DataTables Styling */
-.dataTables_wrapper {
-    margin-top: 10px;
-}
-.dataTables_wrapper table.dataTable {
-    width: 100% !important;
-    table-layout: auto;
-}
-.dataTables_wrapper table.dataTable th {
-    white-space: normal;
-    overflow: visible;
-    font-size: 1rem;
-    padding: 10px;
-    background-color: #007bff; /* Match navbar */
-    color: white;
-    text-align: center;
-}
-.dataTables_wrapper table.dataTable td {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 0.9rem;
-    padding: 8px;
-    text-align: center;
-}
-.dataTables_wrapper table.dataTable tbody tr:hover {
-    background-color: #f1f1f1;
-}
 
 /* Buttons */
 .btn-primary {
@@ -107,9 +51,6 @@ body {
 
 /* Custom Buttons for Specific Actions */
 /* Use these classes on your buttons in the ML and Risk pages respectively */
-.btn-predict {
-    color: #000000 !important;
-}
 .btn-calculate {
     color: #000000 !important;
 }
